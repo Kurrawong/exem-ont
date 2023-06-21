@@ -1,10 +1,14 @@
 = Exemplification Ontology
 
+[[fig-overview]]
+.An informal Model Overview diagram showing the major elements of this model
+image::img/Overview.svg[]
+
 An ontology for the description of examples.
 
 This ontology mostly reuses existing ontologies' classes and properties for the description of examples, usually examples of model (ontology) elements.
 
-This ontology is publishe online at:
+This ontology is published online at:
 
 * *https://linked.data.gov.au/def/exem*
 

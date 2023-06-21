@@ -1,0 +1,18 @@
+
+:canonicalExample
+    a rdf:Property ;
+    rdfs:ifDefinedBy ont: ;
+    rdfs:subPropertyOf :example ;
+    skos:definition "An example that is to be considered as definitive for the resource being exemplified" ;
+    skos:example "See example for :example property" ;
+    skos:prefLabel "canonical example" ;
+.
+
+:implExample
+    a rdf:Property ;
+    rdfs:ifDefinedBy ont: ;
+    rdfs:subPropertyOf :example ;
+    skos:definition "An example that is of the resource being exemplified as implemented in some model or system" ;
+    skos:example "See example for :example property" ;
+    skos:prefLabel "implementation example" ;
+.

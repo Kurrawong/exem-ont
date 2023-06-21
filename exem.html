@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exemplification Ontology</title>
+    <style>
+        #pylode {
+            position: fixed;
+            top: 205px;
+            left: -150px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+        #pylode #p {
+            color: #329545;
+        }
+        #pylode #y {
+            color: #f9cb33;
+        }
+        #pylode #version {
+            font-size: 1.0em;
+        }
+
+        #profile {
+            font-style: italic;
+            font-size: 1.25em;
+            color: darkred!important;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dl {
+            /*border: 1px solid navy;*/
+            /*padding:5px;*/
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 0;
+        }
+
+        dd {
+            margin-bottom: 10px;
+            padding-top: 7px;
+        }
+
+        #metadata ul,
+        #classes ul {
+            list-style-type: none;
+        }
+
+        #metadata ul li,
+        #classes ul li {
+            margin-left: -40px;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
+
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: left;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-con,
+        .sup-col {
+            cursor:help;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-con {
+            color:orange;
+        }
+
+        .sup-col {
+            color:darkred;
+        }
+
+        sup {
+            margin-left: -3px;
+        }
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+
+#toc {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    border: solid 1px navy;
+    font-size: small;
+    width: 180px;
+}
+#toc h3 {
+    margin-top: 5px;
+}
+
+#toc ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#toc .first > li {
+    margin-top: 5px;
+}
+
+#toc .second,
+#toc .third {
+    padding-left: 10px;
+}
+
+#content {
+    width: calc(100% - 150px);
+}
+
+.hover_property {
+    cursor: help;
+    text-decoration: none;
+    border-bottom: dashed 1px;
+}
+
+.setclass {
+    list-style-type: none;
+}
+
+code{
+    word-wrap: break-word;
+  }
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+td {
+    word-wrap: break-word;
+}
+#legend table.entity {
+    width: 25%;
+}
+	</style>
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVQ4jbWPzStEURjG3yQLirlGKUnKFO45Z+SjmXvnnmthQcpCoVhYmD/AwmJiI3OvZuZc2U3UlKU0/gAslMw9JgvhHxAr2fko7r0jHSsl+TgbTz2Lt5731/MASEiJW9ONml2QyX6rsGalmnT74v8BDf12hxJfpV8d1uwNKUBYszabdFv84L8B9X0rESVmmUup2fme0cVhJWaZHw4NWL1SewEAfDe6H3Dy6Ll456WEJsRZS630MwCAOI20ei5OBpxse5zcBZw8eS4uPpfIuDiCainIg9umBCU0GZzgLZ9Hn31OgoATL+CkLDGB5H1OKj4nFd/FBxUXJ0UZNb4edw/6nLyJXaj5FeCVyPLNIVmYK8TG1IwWb16L1gEACAFV90ftoT8bdOX0EeyY99gxBXZMgRz6qGb1KantAACI0UvE6F5XJqEjpsdURouI0Vt5gGOUkUNnPu7ObGIIMfNaGqDmjDRi9FZldF1lRgYzeqUyeoiY4ag5Iy3RgOYRM8+/M2bG8efsO4hGrpmJseyMAAAAAElFTkSuQmCC" rel="icon" sizes="16x16" type="image/png">
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhe2UT0hUQRzHp6Iss1B3VZKIDbbdfW9mnoi4f3zzjkJQeOgS0SEIb1EWBGGlLLu460zQPQM1unUIIjA6rfpm6ZAhHjoIRVQUFUlEbG+euTsdXG1d3VL3bVD4g+9h+L35fT/8fvN7ADgY9aHY5fpIvK82HO9ysu66wxWOzbkjcekKx0a2ALYA/n2AGi3a6ArFezcidziecQygNhhrcUficjP6PwBqtGijKxy/thnVBePHywYoDsFhl53GV8SEcsTx4usCMLUewTVpc23BNvEzm6Neyf1+KcG2vwqwUjgrOJq2JmHftwmkVBRGTvncFodnbI7vChO/FRznCmHsNM7aHM9Yk7Df5iqsLMw9sMNOK2g+jS4IEz0UJv4iuJZb2RltWnB4UZqH6ioGAgAAGe5vtiZhtzDx7OoRadLmeM7m6IRjhnLMW2Vx1bA5GhAmnhIcz6/xNj4Ujsky8UspwfayjDPjsF2Y6L7N8Vzx/BfP+KPg6LbgSqd8DnfJW2CnbaLhfH5ephpqygJYvQU4Z3P82TLRsDDhUTnmrSq+Y3N0Mg+Xldy/zwEAnLMWZ3pHpNExmfLs/t0dOdVcbT0JeKxUwFP2VljjqiE47Jp53LTXNxhsUZjerTByXWX6VZWRs/4bIQ2ACv+UAomgDzLCISNZxAxZKMhIDjLy1JfsaK+I+eGBUBNk5E2x8RogX/PdcDZUqieWTSh5D6nOVKqfhoycUmlHFFIyu5RXqf7AcQDISCpv/tqbMBqK883RtmpISRoxQyJKPgGn3wNk5NEigDFa6hslqV/Kj+FdBQD0bshIDlKSLlVcoWQo36UhR80BAMB73lulMn0EMpJTqD6qJiOt3mho/8GbkT2BZNgDB/V+RI0fkOrT3kRIVQbaDizJm2hdNbINBxwk5xAj3yEjuV9rZ1iIkgxixkLBA83mz8uCjLwoGwAx0vOnFSy5mtR4VTaAQvVORMnwZgSpzkrV/QmdE2tKe46+MQAAAABJRU5ErkJggg==" rel="icon" sizes="32x32" type="image/png">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <script id="schema.org" type="application/ld+json">
+[
+  {
+    "@id": "http://orcid.org/0000-0002-8742-7730",
+    "https://schema.org/email": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+        "@value": "nick@kurrawong.ai"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@value": "Nicholas J. Car"
+      }
+    ]
+  },
+  {
+    "@id": "https://linked.data.gov.au/def/exem",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/creator": [
+      {
+        "@id": "http://orcid.org/0000-0002-8742-7730"
+      }
+    ],
+    "https://schema.org/description": [
+      {
+        "@language": "en",
+        "@value": "An ontology for the description of examples."
+      }
+    ],
+    "https://schema.org/license": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+        "@value": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Exemplification Ontology"
+      }
+    ],
+    "https://schema.org/publisher": [
+      {
+        "@id": "https://kurrawong.ai"
+      }
+    ]
+  },
+  {
+    "@id": "https://kurrawong.ai",
+    "https://schema.org/name": [
+      {
+        "@value": "KurrawongAI"
+      }
+    ],
+    "https://schema.org/url": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+        "@value": "https://kurrawong.ai"
+      }
+    ]
+  }
+]
+	</script>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section" id="metadata">
+        <h1>Exemplification Ontology</h1>
+        <div class="figure" style="text-align:center;">
+          <a href="img/Overview.svg">
+            <img src="img/Overview.svg" alt="model overview image" style="max-width:800px" />
+          </a>
+          <p><strong>Figure 1</strong>: Model overview</p>
+        </div>
+        <h2>Metadata</h2>
+        <dl>
+          <div>
+            <dt>
+              <strong>IRI</strong>
+            </dt>
+            <dd>
+              <code>https://linked.data.gov.au/def/exem</code>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://purl.org/dc/terms/title" title="A name given to the resource. Defined in DCMI Metadata Terms">Title</a>
+            </dt>
+            <dd><p>Exemplification Ontology</p></dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://purl.org/dc/terms/publisher" title="An entity responsible for making the resource available. Defined in DCMI Metadata Terms">Publisher</a>
+            </dt>
+            <dd>
+              <span>
+                <a href="https://kurrawong.ai">KurrawongAI</a>
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://purl.org/dc/terms/creator" title="An entity responsible for making the resource. Defined in DCMI Metadata Terms">Creator</a>
+            </dt>
+            <dd>
+              <span>
+                <span>Nicholas J. Car</span>
+                <a href="http://orcid.org/0000-0002-8742-7730">
+                    <svg width="15px" height="15px" viewBox="0 0 72 72" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <title>Orcid logo</title>
+                        <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="hero" transform="translate(-924.000000, -72.000000)" fill-rule="nonzero">
+                                <g id="Group-4">
+                                    <g id="vector_iD_icon" transform="translate(924.000000, 72.000000)">
+                                        <path d="M72,36 C72,55.884375 55.884375,72 36,72 C16.115625,72 0,55.884375 0,36 C0,16.115625 16.115625,0 36,0 C55.884375,0 72,16.115625 72,36 Z" id="Path" fill="#A6CE39"></path>
+                                        <g id="Group" transform="translate(18.868966, 12.910345)" fill="#FFFFFF">
+                                            <polygon id="Path" points="5.03734929 39.1250878 0.695429861 39.1250878 0.695429861 9.14431787 5.03734929 9.14431787 5.03734929 22.6930505 5.03734929 39.1250878"></polygon>
+                                            <path d="M11.409257,9.14431787 L23.1380784,9.14431787 C34.303014,9.14431787 39.2088191,17.0664074 39.2088191,24.1486995 C39.2088191,31.846843 33.1470485,39.1530811 23.1944669,39.1530811 L11.409257,39.1530811 L11.409257,9.14431787 Z M15.7511765,35.2620194 L22.6587756,35.2620194 C32.49858,35.2620194 34.7541226,27.8438084 34.7541226,24.1486995 C34.7541226,18.1301509 30.8915059,13.0353795 22.4332213,13.0353795 L15.7511765,13.0353795 L15.7511765,35.2620194 Z" id="Shape"></path>
+                                            <path d="M5.71401206,2.90182329 C5.71401206,4.441452 4.44526937,5.72914146 2.86638958,5.72914146 C1.28750978,5.72914146 0.0187670918,4.441452 0.0187670918,2.90182329 C0.0187670918,1.33420133 1.28750978,0.0745051096 2.86638958,0.0745051096 C4.44526937,0.0745051096 5.71401206,1.36219458 5.71401206,2.90182329 Z" id="Path"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </svg></a>
+                <span>(
+                  <a href="mailto:nick@kurrawong.ai">nick@kurrawong.ai</a> )
+                </span>
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://purl.org/dc/terms/license" title="A legal document giving official permission to do something with the resource. Defined in DCMI Metadata Terms">License</a>
+            </dt>
+            <dd>
+              <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://www.w3.org/2002/07/owl#versionIRI" title="The property that identifies the version IRI of an ontology. Defined in The OWL 2 Schema vocabulary (OWL 2)">Version Iri</a>
+            </dt>
+            <dd>
+              <a href="#0.2">0.2</a>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://www.w3.org/2002/07/owl#versionInfo" title="The annotation property that provides version information for an ontology or another OWL construct. Defined in The OWL 2 Schema vocabulary (OWL 2)">Version Info</a>
+            </dt>
+            <dd><p>0.2</p></dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://purl.org/vocab/vann/preferredNamespacePrefix" title="None. Defined in None">Preferred Namespace Prefix</a>
+            </dt>
+            <dd><p>exem</p></dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+            </dt>
+            <dd><p>An ontology for the description of examples.</p></dd>
+          </div>
+        </dl>
+      </div>
+      <div class="section" id="classes">
+        <h2>Classes</h2>
+        <div class="property entity" id="ResourceDescriptor">
+          <h3>Resource Descriptor
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://www.w3.org/ns/dx/prof/ResourceDescriptor</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource. Defined in The RDF Schema vocabulary (RDFS)">Is Defined By</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/ns/dx/prof/">prof:</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>A description of a resource that defines an aspect - a particular part, feature or role - of a Profile</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre>See example for :example property</pre>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inDomainOf" title="Inverse of rdfs:domain. Defined in Ontology Documentation Profile">In Domain Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <span>
+                      <a href="http://www.w3.org/ns/dx/prof/hasArtifact">has artifact</a>
+                      <sup class="sup-op" title="OWL Object Property">op</sup>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <a href="http://www.w3.org/ns/dx/prof/hasRole">has role</a>
+                      <sup class="sup-op" title="OWL Object Property">op</sup>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="section" id="properties">
+        <h2>Properties</h2>
+        <div class="property entity" id="value">
+          <h3>value
+            <sup class="sup-p" title="RDF Property">p</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#value</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>Idiomatic property used for structured values</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre>See example for :example property</pre>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="section" id="objectproperties">
+        <h2>Object Properties</h2>
+        <div class="property entity" id="conformsto">
+          <h3>conforms to
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://purl.org/dc/terms/conformsTo</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource. Defined in The RDF Schema vocabulary (RDFS)">Is Defined By</a>
+              </th>
+              <td>
+                <a href="http://purl.org/dc/terms/">DCMI Metadata Terms</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>An established standard to which the described resource conforms</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#scopeNote" title="A note that helps to clarify the meaning and/or the use of a concept. Defined in SKOS Vocabulary">Scope Note</a>
+              </th>
+              <td><p>Use this property to indicate if the example itself conforms to a Profile/Standard</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre>See example for :example property</pre>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="hasartifact">
+          <h3>has artifact
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://www.w3.org/ns/dx/prof/hasArtifact</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource. Defined in The RDF Schema vocabulary (RDFS)">Is Defined By</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/ns/dx/prof/">prof:</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The URL of a downloadable file with particulars such as its format and role indicated by the Resource Descriptor</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#scopeNote" title="A note that helps to clarify the meaning and/or the use of a concept. Defined in SKOS Vocabulary">Scope Note</a>
+              </th>
+              <td><p>Use this property to indicate a remote object that contains the example's content</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre>See the use for :example. If the resource was remote, rather than a local literal value, this property could be used instead of rdf:value</pre>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
+              </th>
+              <td>
+                <span>
+                  <a href="http://www.w3.org/ns/dx/prof/ResourceDescriptor">Resource Descriptor</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="hasrole">
+          <h3>has role
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://www.w3.org/ns/dx/prof/hasRole</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource. Defined in The RDF Schema vocabulary (RDFS)">Is Defined By</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/ns/dx/prof/">prof:</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The function of an artifact described by a Resource Descriptor, such as specification, guidance etc.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#scopeNote" title="A note that helps to clarify the meaning and/or the use of a concept. Defined in SKOS Vocabulary">Scope Note</a>
+              </th>
+              <td><p>Use this property to indicate what role the example plays with respect to the thing being exemplified</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre>See example for :example property</pre>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
+              </th>
+              <td>
+                <span>
+                  <a href="http://www.w3.org/ns/dx/prof/ResourceDescriptor">Resource Descriptor</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
+              </th>
+              <td>
+                <span>
+                  <a href="http://www.w3.org/2004/02/skos/core#Concept">Concept</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="depiction">
+          <h3>depiction
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://xmlns.com/foaf/0.1/depiction</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource. Defined in The RDF Schema vocabulary (RDFS)">Is Defined By</a>
+              </th>
+              <td>
+                <a href="http://xmlns.com/foaf/0.1/">foaf:</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>A depiction of some thing</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#scopeNote" title="A note that helps to clarify the meaning and/or the use of a concept. Defined in SKOS Vocabulary">Scope Note</a>
+              </th>
+              <td><p>Use this property to indicate an image that is the content of the example. The image must be available at a URL</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre># an example of using foaf:depiction to link to an image
+# for the imaginary property ex:hasNumberOfLegs
+PREFIX : &lt;https://linked.data.gov.au/def/exem/&gt;
+PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
+PREFIX ex: &lt;http://example.com/&gt;
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX prof: &lt;http://www.w3.org/ns/dx/prof/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX sdo: &lt;https://schema.org/&gt;
+
+ex:hasNumberOfLegs
+    a rdf:Property ;
+    :example [
+        sdo:name &quot;Remote image of legs&quot; ;
+        foaf:depiction &quot;http://some-image-online.com/img/milli&quot; ;
+        dcterms:format &quot;image/png&quot; ;
+    ] ;
+.</pre><br />
+          <div class="figure">
+            <a href="img/EG.2.svg">
+              <img src="img/EG.2.svg" alt="use of foaf:depiction" style="max-width:500px" />
+            </a>
+            <p><strong>Figure 2</strong>: use of <code>foaf:depiction to link to an image</code></p>
+          </div>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subPropertyOf" title="The subject is a subproperty of a property. Defined in The RDF Schema vocabulary (RDFS)">Sub Property Of</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#value">rdfs:value</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#domain" title="A domain of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Domain</a>
+              </th>
+              <td>
+                <span>
+                  <a href="http://www.w3.org/2002/07/owl#Thing">Thing</a>
+                  <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/2001/XMLSchema#anyURI">xsd:anyURI</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="example">
+          <h3>example
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>https://linked.data.gov.au/def/exem/example</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre># an RDF Turtle example of the use of this property
+# for the imaginary property ex:hasNumberOfLegs
+PREFIX : &lt;https://linked.data.gov.au/def/exem/&gt;
+PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
+PREFIX egroles: &lt;https://linked.data.gov.au/def/exem/roles/&gt;
+PREFIX ex: &lt;http://example.com/&gt;
+PREFIX prof: &lt;http://www.w3.org/ns/dx/prof/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX sdo: &lt;https://schema.org/&gt;
+
+ex:hasNumberOfLegs
+    a rdf:Property ;
+    :example [
+        a prof:ResourceDescriptor ;
+        sdo:name &quot;Simple RDF Example&quot; ;
+        rdf:value '''ex:millipede-a
+    a ex:Animal ;
+    :hasNumberOfLegs 120 ;
+.''' ;
+        dcterms:format &quot;text/turtle&quot; ;
+        prof:hasRole egroles:CanonicalExample ;
+    ] ;
+.</pre><br />
+          <div class="figure">
+            <a href="img/EG.1.svg">
+              <img src="img/EG.1.svg" alt="use of :example" style="max-width:500px" />
+            </a>
+            <p><strong>Figure 3</strong>: use of <code>:example</code></p>
+          </div><
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subPropertyOf" title="The subject is a subproperty of a property. Defined in The RDF Schema vocabulary (RDFS)">Sub Property Of</a>
+              </th>
+              <td>
+                <span>
+                  <a href="http://www.w3.org/2004/02/skos/core#example">example</a>
+                  <sup class="sup-ap" title="OWL Annotation Property">ap</sup>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="section" id="annotationproperties">
+        <h2>Annotation Properties</h2>
+        <div class="property entity" id="format">
+          <h3>format
+            <sup class="sup-ap" title="OWL Annotation Property">ap</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://purl.org/dc/terms/format</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource. Defined in The RDF Schema vocabulary (RDFS)">Is Defined By</a>
+              </th>
+              <td>
+                <a href="http://purl.org/dc/terms/">DCMI Metadata Terms</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The file format, physical medium, or dimensions of the resource</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#scopeNote" title="A note that helps to clarify the meaning and/or the use of a concept. Defined in SKOS Vocabulary">Scope Note</a>
+              </th>
+              <td><p>Use this property to indicate if the format / Media Type of the example</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre>See example for :example property</pre>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#range" title="A range of the subject property. Defined in The RDF Schema vocabulary (RDFS)">Range</a>
+              </th>
+              <td>
+                <a href="http://purl.org/dc/terms/MediaTypeOrExtent">Media Type or Extent</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="Source">
+          <h3>Source
+            <sup class="sup-ap" title="OWL Annotation Property">ap</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://purl.org/dc/terms/source</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource. Defined in The RDF Schema vocabulary (RDFS)">Is Defined By</a>
+              </th>
+              <td>
+                <a href="http://purl.org/dc/terms/">DCMI Metadata Terms</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>A related resource from which the described resource is derived.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#scopeNote" title="A note that helps to clarify the meaning and/or the use of a concept. Defined in SKOS Vocabulary">Scope Note</a>
+              </th>
+              <td><p>Use this property to indicate a non-RDF resource, such as a web page, from wich this example was derived. Use prov:wasDerivedFrom to indicate an RDF resource. Use skos:historyNote to describe a non-linkable source or to contain a general description of how this example was created.</p>
+<p>Use a datatype of xsd:anyURI for web pages</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre>See example for :example property</pre>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="example1">
+          <h3>example
+            <sup class="sup-ap" title="OWL Annotation Property">ap</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://www.w3.org/2004/02/skos/core#example</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource. Defined in The RDF Schema vocabulary (RDFS)">Is Defined By</a>
+              </th>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core">SKOS Vocabulary</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>An example of the use of a concept</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#scopeNote" title="A note that helps to clarify the meaning and/or the use of a concept. Defined in SKOS Vocabulary">Scope Note</a>
+              </th>
+              <td><p>Do not use this property: it is included only to facilitate understanding of the :example property</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept. Defined in SKOS Vocabulary">Example</a>
+              </th>
+              <td>
+                <pre># A simple descriptive example - inline text
+    ex:class-x
+        a owl:Class ;
+        skos:prefLabel &quot;Class X&quot;@en ;
+        skos:example &quot;Description of use of Class X&quot; ;
+.</pre>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subPropertyOf" title="The subject is a subproperty of a property. Defined in The RDF Schema vocabulary (RDFS)">Sub Property Of</a>
+              </th>
+              <td>
+                <span>
+                  <a href="http://www.w3.org/2004/02/skos/core#note">note</a>
+                  <sup class="sup-ap" title="OWL Annotation Property">ap</sup>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/superPropertyOf" title="Inverse of RDFS' subPropertyOf. Defined in Ontology Documentation Profile">Super Property Of</a>
+              </th>
+              <td>
+                <span>
+                  <a href="#example">example</a>
+                  <sup class="sup-op" title="OWL Object Property">op</sup>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="namespaces">
+        <h2>Namespaces</h2>
+        <dl>
+          <dt id=":">:</dt>
+          <dd>
+            <code>https://linked.data.gov.au/def/exem/</code>
+          </dd>
+          <dt id="dcam">dcam</dt>
+          <dd>
+            <code>http://purl.org/dc/dcam/</code>
+          </dd>
+          <dt id="dcterms">dcterms</dt>
+          <dd>
+            <code>http://purl.org/dc/terms/</code>
+          </dd>
+          <dt id="foaf">foaf</dt>
+          <dd>
+            <code>http://xmlns.com/foaf/0.1/</code>
+          </dd>
+          <dt id="ont">ont</dt>
+          <dd>
+            <code>https://linked.data.gov.au/def/exem</code>
+          </dd>
+          <dt id="owl">owl</dt>
+          <dd>
+            <code>http://www.w3.org/2002/07/owl#</code>
+          </dd>
+          <dt id="prof">prof</dt>
+          <dd>
+            <code>http://www.w3.org/ns/dx/prof/</code>
+          </dd>
+          <dt id="rdf">rdf</dt>
+          <dd>
+            <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>
+          </dd>
+          <dt id="rdfs">rdfs</dt>
+          <dd>
+            <code>http://www.w3.org/2000/01/rdf-schema#</code>
+          </dd>
+          <dt id="sdo">sdo</dt>
+          <dd>
+            <code>https://schema.org/</code>
+          </dd>
+          <dt id="skos">skos</dt>
+          <dd>
+            <code>http://www.w3.org/2004/02/skos/core#</code>
+          </dd>
+          <dt id="vann">vann</dt>
+          <dd>
+            <code>http://purl.org/vocab/vann/</code>
+          </dd>
+          <dt id="xsd">xsd</dt>
+          <dd>
+            <code>http://www.w3.org/2001/XMLSchema#</code>
+          </dd>
+        </dl>
+      </div>
+      <div id="legend">
+        <h2>Legend</h2>
+        <table class="entity">
+          <tr>
+            <td>
+              <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+            </td>
+            <td>Classes</td>
+          </tr>
+          <tr>
+            <td>
+              <sup class="sup-p" title="RDF Property">p</sup>
+            </td>
+            <td>Properties</td>
+          </tr>
+          <tr>
+            <td>
+              <sup class="sup-op" title="OWL Object Property">op</sup>
+            </td>
+            <td>Object Properties</td>
+          </tr>
+          <tr>
+            <td>
+              <sup class="sup-ap" title="OWL Annotation Property">ap</sup>
+            </td>
+            <td>Annotation Properties</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="pylode">
+      <p>made by 
+        <a href="https://github.com/rdflib/pyLODE">
+          <span id="p">p</span>
+          <span id="y">y</span>
+          <span>LODE</span>
+        </a>
+        <a href="https://github.com/rdflib/pyLODE/release/3.0.6a" id="version">3.0.6a</a>
+        <span> with the </span>
+        <a href="https://w3id.org/profile/ontpub" id="profile">OntPub</a>
+        <span>profile</span>
+      </p>
+    </div>
+    <div id="toc">
+      <h3>Table of Contents</h3>
+      <ul class="first">
+        <li>
+          <h4>
+            <a href="#metadata">Metadata</a>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <a href="#classes">Classes</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#ResourceDescriptor">Resource Descriptor</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#properties">Properties</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#value">value</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#objectproperties">Object Properties</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#conformsto">conforms to</a>
+            </li>
+            <li>
+              <a href="#hasartifact">has artifact</a>
+            </li>
+            <li>
+              <a href="#hasrole">has role</a>
+            </li>
+            <li>
+              <a href="#depiction">depiction</a>
+            </li>
+            <li>
+              <a href="#example">example</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#annotationproperties">Annotation Properties</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#format">format</a>
+            </li>
+            <li>
+              <a href="#Source">Source</a>
+            </li>
+            <li>
+              <a href="#example1">example</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#namespaces">Namespaces</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#"></a>
+            </li>
+            <li>
+              <a href="#dcam">dcam</a>
+            </li>
+            <li>
+              <a href="#dcterms">dcterms</a>
+            </li>
+            <li>
+              <a href="#foaf">foaf</a>
+            </li>
+            <li>
+              <a href="#ont">ont</a>
+            </li>
+            <li>
+              <a href="#owl">owl</a>
+            </li>
+            <li>
+              <a href="#prof">prof</a>
+            </li>
+            <li>
+              <a href="#rdf">rdf</a>
+            </li>
+            <li>
+              <a href="#rdfs">rdfs</a>
+            </li>
+            <li>
+              <a href="#sdo">sdo</a>
+            </li>
+            <li>
+              <a href="#skos">skos</a>
+            </li>
+            <li>
+              <a href="#vann">vann</a>
+            </li>
+            <li>
+              <a href="#xsd">xsd</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#legend">Legend</a>
+          </h4>
+          <ul class="second"></ul>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

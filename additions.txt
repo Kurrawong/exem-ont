@@ -1,0 +1,29 @@
+After <h1>Exemplification Ontology</h1>:
+
+        <div class="figure" style="text-align:center;">
+          <a href="img/Overview.svg">
+            <img src="img/Overview.svg" alt="model overview image" style="max-width:800px" />
+          </a>
+          <p><strong>Figure 1</strong>: Model overview</p>
+        </div>
+
+
+After :example's </pre>:
+
+<br />
+          <div class="figure">
+            <a href="img/EG.1.svg">
+              <img src="img/EG.1.svg" alt="use of :example" style="max-width:500px" />
+            </a>
+            <p><strong>Figure 3</strong>: use of <code>:example</code></p>
+          </div>
+
+After foaf:depiction's </pre>:
+
+<br />
+          <div class="figure">
+            <a href="img/EG.2.svg">
+              <img src="img/EG.2.svg" alt="use of foaf:depiction" style="max-width:500px" />
+            </a>
+            <p><strong>Figure 2</strong>: use of <code>foaf:depiction to link to an image</code></p>
+          </div>
