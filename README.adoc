@@ -15,13 +15,13 @@ This ontology is published online at:
 
 == Rights and License
 
-This ontology was made by https://kurrawong.ai[KurrawongAI] for use in several Australian government projects. The ontology has teh following copyright notice:
+This ontology was made by https://kurrawong.ai[KurrawongAI] for use in several Australian government projects. The ontology has the following copyright notice:
 
 &copy; KurrawongAI 2023
 
 This information is available for reuse under the https://creativecommons.org/licenses/by/4.0/[Creative Commons 4.0 license], see the LICENSE file for the deed.
 
-Much of the ontology's content is originally published elsewhere and just reused here, as per standards Semantic Web practice. Where elements are reused, their defining source is indicated.
+Much of the ontology's content is originally published elsewhere and just reused here, as per standard Semantic Web practice. Where elements are reused, their defining source is indicated.
 
 
 == Contacts

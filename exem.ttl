@@ -1,5 +1,6 @@
 PREFIX : <https://linked.data.gov.au/def/exem/>
 PREFIX dcam: <http://purl.org/dc/dcam/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX ont: <https://linked.data.gov.au/def/exem>
@@ -9,6 +10,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sdo: <https://schema.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX sm: <https://linked.data.gov.au/def/supermodel/>
 PREFIX vann: <http://purl.org/vocab/vann/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
@@ -27,9 +29,9 @@ ont:
     sdo:publisher <https://kurrawong.ai> ;
     skos:prefLabel "Exemplification Ontology"@en ;
     vann:preferredNamespacePrefix "exem" ;
-    owl:versionIRI :0.2 ;
-    owl:versionInfo "0.2"@en ;
-    skos:historyNote "This ontology was initially created in 2021 and mostly implemented in 2023 for Australian government data modelling projects that wanted to include examples within the models (ontologies)" ;
+    owl:versionIRI :0.3 ;
+    owl:versionInfo "0.3"@en ;
+    skos:historyNote "This ontology was initially created in 2021 and mostly implemented in 2023 for Australian government data modelling projects that wanted to include examples within the models (ontologies). An update to the model was made to use existing schema.org terminology plus some other bits from DCAT and SKOS." ;
 .
 
 <https://kurrawong.ai>
@@ -45,159 +47,100 @@ ont:
     sdo:name "Nicholas J. Car" ;
 .
 
-dcterms:conformsTo
-    a owl:ObjectProperty ;
-    dcam:rangeIncludes dcterms:Standard ;
-    rdfs:isDefinedBy dcterms: ;
-    skos:historyNote "Included here as per use in the Profiles Vocabulary" ;
-    skos:definition "An established standard to which the described resource conforms"@en ;
-    skos:example "See example for :example property" ;
-    skos:prefLabel "conforms to"@en ;
-    skos:scopeNote "Use this property to indicate if the example itself conforms to a Profile/Standard" ;
+sdo:name
+    a owl:AnnotationProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:prefLabel "name"@en ;
+    skos:definition "The name of the item."@en ;
+    skos:scopeNote "Use this to indicate the name, label or title of the example."@en ;
 .
 
-dcterms:format
+sdo:description
     a owl:AnnotationProperty ;
-    dcam:rangeIncludes
-        dcterms:Extent ,
-        dcterms:MediaType ;
-    rdfs:isDefinedBy dcterms: ;
-    rdfs:range dcterms:MediaTypeOrExtent ;
-    skos:example "See example for :example property" ;
-    skos:historyNote "Included here as per use in the Profiles Vocabulary" ;
-    skos:definition "The file format, physical medium, or dimensions of the resource"@en ;
-    skos:prefLabel "format" ;
-    skos:scopeNote "Use this property to indicate if the format / Media Type of the example" ;
+    rdfs:isDefinedBy sdo: ;
+    skos:prefLabel "description"@en ;
+    skos:definition "A description of the item."@en ;
+    skos:scopeNote "Use this to indicate a description of the example."@en ;
+.
+
+sdo:contentUrl
+    a owl:AnnotationProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:prefLabel "content Url"@en ;
+    skos:definition "Actual bytes of the media object, for example the image file or video file."@en ;
+    skos:scopeNote "Use this to indicate the location of an example such as an image or audio file."@en ;
+.
+
+sdo:encodingFormat
+    a owl:AnnotationProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:prefLabel "encoding format"@en ;
+    skos:definition "Media type typically expressed using a MIME format (see IANA site and MDN reference), e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc."@en ;
+    skos:scopeNote "Use this to indicate the media type format of the example."@en ;
 .
 
 dcterms:source
     a owl:AnnotationProperty ;
     rdfs:isDefinedBy dcterms: ;
     skos:definition "A related resource from which the described resource is derived."@en ;
-    skos:example "See example for :example property" ;
+    skos:example "See example for :example property"@en ;
     skos:prefLabel "Source"@en ;
-    skos:historyNote "Included here as per general metadata use (DCAT, SDO etc.)" ;
-    skos:scopeNote """Use this property to indicate a non-RDF resource, such as a web page, from wich this example was derived. Use prov:wasDerivedFrom to indicate an RDF resource. Use skos:historyNote to describe a non-linkable source or to contain a general description of how this example was created.
+    skos:historyNote "Included here as per general metadata use (DCAT, SDO etc.)"@en ;
+    skos:scopeNote """Use this property to indicate a non-RDF resource, such as a web page, from which this example was derived. Use prov:wasDerivedFrom to indicate an RDF resource. Use skos:historyNote to describe a non-linkable source or to contain a general description of how this example was created.
 
-Use a datatype of xsd:anyURI for web pages""" ;
+Use a datatype of xsd:anyURI for web pages"""@en ;
 .
 
-skos:example
+sdo:workExample
+    a owl:ObjectProperty ;
+    rdfs:isDefinedBy sdo: ;
+    sdo:rangeIncludes sdo:MediaObject, sdo:ImageObject ;
+    skos:definition "Example/instance/realization/derivation of the concept of this creative work. E.g. the paperback edition, first edition, or e-book."@en ;
+    skos:prefLabel "work example"@en ;
+    skos:scopeNote "Use this property to link from a resource to an example described using a MediaObject."@en ;
+    sdo:inverseOf sdo:exampleOfWork ;
+    # TODO: provide example usage
+.
+
+sdo:exampleOfWork
+    a owl:ObjectProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:definition "A creative work that this work is an example/instance/realization/derivation of."@en ;
+    skos:prefLabel "example of work"@en ;
+    sdo:inverseOf sdo:workExample ;
+.
+
+sdo:caption
     a owl:AnnotationProperty ;
-    rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core> ;
-    rdfs:subPropertyOf skos:note ;
-    skos:definition "An example of the use of a concept"@en ;
-    skos:example """# A simple descriptive example - inline text
-    ex:class-x
-        a owl:Class ;
-        skos:prefLabel "Class X"@en ;
-        skos:example "Description of use of Class X" ;
-.""" ;
-    skos:historyNote "Included here as the basis for all examples modelling" ;
-    skos:prefLabel "example"@en ;
-    skos:scopeNote "Do not use this property: it is included only to facilitate understanding of the :example property" ;
+    rdfs:isDefinedBy sdo: ;
+    skos:prefLabel "caption"@en ;
+    skos:definition "The caption for this object. For downloadable machine formats (closed caption, subtitles etc.) use MediaObject and indicate the encodingFormat."@en ;
+    skos:scopeNote "Use this to indicate a short description of an ImageObject example."@en ;
 .
 
-prof:hasArtifact
+
+dcat:hadRole
     a owl:ObjectProperty ;
-    rdfs:domain prof:ResourceDescriptor ;
-    rdfs:isDefinedBy prof: ;
-    skos:example "See the use for :example. If the resource was remote, rather than a local literal value, this property could be used instead of rdf:value" ;
-    skos:historyNote "Included here as per use in the Profiles Vocabulary" ;
-    skos:definition "The URL of a downloadable file with particulars such as its format and role indicated by the Resource Descriptor"@en ;
-    skos:prefLabel "has artifact"@en ;
-    skos:scopeNote "Use this property to indicate a remote object that contains the example's content" ;
+    rdfs:isDefinedBy dcat: ;
+    sdo:rangeIncludes skos:Concept ;
+    skos:definition "The function of an entity or agent with respect to another entity or resource."@en ;
+    skos:prefLabel "had role"@en ;
+    skos:scopeNote "Use this property to indicate the role of the example (canonical, implementation, informative, etc.) with respect to the thing being exemplified. Values are expected to be from a SKOS controlled vocabulary."@en ;
 .
 
-prof:hasRole
-    a owl:ObjectProperty ;
-    rdfs:domain prof:ResourceDescriptor ;
-    rdfs:isDefinedBy prof: ;
-    rdfs:range skos:Concept ;
-    skos:example "See example for :example property" ;
-    skos:historyNote "Included here as per use in the Profiles Vocabulary" ;
-    skos:definition "The function of an artifact described by a Resource Descriptor, such as specification, guidance etc."@en ;
-    skos:prefLabel "has role"@en ;
-    skos:scopeNote "Use this property to indicate what role the example plays with respect to the thing being exemplified" ;
-.
-
-foaf:depiction
-    a owl:ObjectProperty ;
-    rdfs:domain owl:Thing ;
-    rdfs:isDefinedBy foaf: ;
-    rdfs:range xsd:anyURI ;
-    rdfs:subPropertyOf rdfs:value ;
-    owl:inverseOf foaf:depicts ;
-    skos:definition "A depiction of some thing"@en ;
-    skos:example """# an example of using foaf:depiction to link to an image
-# for the imaginary property ex:hasNumberOfLegs
-PREFIX : <https://linked.data.gov.au/def/exem/>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX ex: <http://example.com/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX prof: <http://www.w3.org/ns/dx/prof/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sdo: <https://schema.org/>
-
-ex:hasNumberOfLegs
-    a rdf:Property ;
-    :example [
-        sdo:name "Remote image of legs" ;
-        foaf:depiction "http://some-image-online.com/img/milli" ;
-        dcterms:format "image/png" ;
-    ] ;
-.""" ;
-    skos:historyNote "Included here to indicate images" ;
-    skos:prefLabel "depiction" ;
-    skos:scopeNote "Use this property to indicate an image that is the content of the example. The image must be available at a URL" ;
-.
-
-prof:ResourceDescriptor
+sdo:MediaObject
     a owl:Class ;
-    rdfs:isDefinedBy prof: ;
-    skos:definition "A description of a resource that defines an aspect - a particular part, feature or role - of a Profile"@en ;
-    skos:example "See example for :example property" ;
-    skos:historyNote "Included here as per use in the Profiles Vocabulary" ;
-    skos:prefLabel "Resource Descriptor"@en ;
+    rdfs:isDefinedBy sdo: ;
+    skos:definition "A media object, such as an image, video, audio, or text object embedded in a web page or a downloadable dataset i.e. DataDownload."@en ;
+    skos:prefLabel "MediaObject"@en ;
+    skos:scopeNote "Use this class to represent examples of resources."@en ;
 .
 
-:example
-    a owl:ObjectProperty ;
-    rdfs:ifDefinedBy ont: ;
-    rdfs:subPropertyOf skos:example ;
-    skos:definition "" ;
-    skos:example """# an RDF Turtle example of the use of this property
-# for the imaginary property ex:hasNumberOfLegs
-PREFIX : <https://linked.data.gov.au/def/exem/>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX egroles: <https://linked.data.gov.au/def/exem/roles/>
-PREFIX ex: <http://example.com/>
-PREFIX prof: <http://www.w3.org/ns/dx/prof/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sdo: <https://schema.org/>
-
-ex:hasNumberOfLegs
-    a rdf:Property ;
-    :example [
-        a prof:ResourceDescriptor ;
-        sdo:name "Simple RDF Example" ;
-        rdf:value '''ex:millipede-a
-    a ex:Animal ;
-    :hasNumberOfLegs 120 ;
-.''' ;
-        dcterms:format "text/turtle" ;
-        prof:hasRole egroles:CanonicalExample ;
-    ] ;
-.""" ;
-    skos:historyNote "Created in this ontology" ;
-    skos:prefLabel "example" ;
-.
-
-rdf:value
-    a rdf:Property ;
-    rdf:ifDefinedBy rdf: ;
-    skos:definition "Idiomatic property used for structured values" ;
-    skos:example "See example for :example property" ;
-    skos:historyNote "Included here as the basic way to indicate a literal example value" ;
-    skos:prefLabel "value" ;
+sdo:ImageObject
+    a owl:Class ;
+    rdfs:isDefinedBy sdo: ;
+    rdfs:subClassOf sdo:MediaObject ;
+    skos:definition "An image file."@en ;
+    skos:prefLabel "ImageObject"@en ;
+    skos:scopeNote "Use this class to represent examples that are in the form of an image."@en ;
 .

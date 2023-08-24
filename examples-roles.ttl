@@ -1,7 +1,12 @@
+PREFIX : <https://example.com/>
+PREFIX ont: <https://example.com/ont/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 :canonicalExample
     a rdf:Property ;
-    rdfs:ifDefinedBy ont: ;
+    rdfs:isDefinedBy ont: ;
     rdfs:subPropertyOf :example ;
     skos:definition "An example that is to be considered as definitive for the resource being exemplified" ;
     skos:example "See example for :example property" ;
@@ -10,9 +15,10 @@
 
 :implExample
     a rdf:Property ;
-    rdfs:ifDefinedBy ont: ;
+    rdfs:isDefinedBy ont: ;
     rdfs:subPropertyOf :example ;
     skos:definition "An example that is of the resource being exemplified as implemented in some model or system" ;
     skos:example "See example for :example property" ;
     skos:prefLabel "implementation example" ;
 .
+
