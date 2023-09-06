@@ -1,1 +1,1 @@
-git+https://github.com/RDFLib/pyLODE@75e791510f1063762c03f9133184bc826f37e8d1
+git+https://github.com/RDFLib/pyLODE@e5b534e504d9227899932dd1f0f100c48b230ac1
