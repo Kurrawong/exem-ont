@@ -1,43 +1,148 @@
 PREFIX : <https://linked.data.gov.au/def/exem/>
-PREFIX dcam: <http://purl.org/dc/dcam/>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX ont: <https://linked.data.gov.au/def/exem>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX prof: <http://www.w3.org/ns/dx/prof/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sdo: <https://schema.org/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX sm: <https://linked.data.gov.au/def/supermodel/>
 PREFIX vann: <http://purl.org/vocab/vann/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
+dcterms:source
+    a owl:DatatypeProperty ;
+    rdfs:isDefinedBy dcterms: ;
+    skos:definition "A related resource from which the described resource is derived."@en ;
+    skos:example "See example for :example property"@en ;
+    skos:historyNote "Included here as per general metadata use (DCAT, SDO etc.)"@en ;
+    skos:prefLabel "source"@en ;
+    skos:scopeNote """Use this property to indicate a non-RDF resource, such as a web page, from which this example was derived. Use prov:wasDerivedFrom to indicate an RDF resource. Use skos:historyNote to describe a non-linkable source or to contain a general description of how this example was created.
+
+Use a datatype of xsd:anyURI for web pages"""@en ;
+    sdo:domainIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
+    sdo:rangeIncludes xsd:anyURI ;
+.
+
+dcat:hadRole
+    a owl:ObjectProperty ;
+    rdfs:isDefinedBy dcat: ;
+    skos:definition "The function of an entity or agent with respect to another entity or resource."@en ;
+    skos:prefLabel "had role"@en ;
+    skos:scopeNote "Use this property to indicate the role of the example (canonical, implementation, informative, etc.) with respect to the thing being exemplified. Values are expected to be from a SKOS controlled vocabulary."@en ;
+    sdo:domainIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
+    sdo:rangeIncludes skos:Concept ;
+.
+
+sh:order
+    a owl:DatatypeProperty ;
+    rdfs:isDefinedBy sh: ;
+    skos:definition "Specifies the relative order of this compared to its siblings. For example use 0 for the first, 1 for the second."@en ;
+    skos:prefLabel "order"@en ;
+    skos:scopeNote "Use this property to provide a logical ordering of examples."@en ;
+    sdo:domainIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
+    sdo:rangeIncludes
+        xsd:decimal ,
+        xsd:integer ;
+.
+
 ont:
     a owl:Ontology ;
-    sdo:dateCreated "2021-09-28"^^xsd:date ;
     dcterms:creator <http://orcid.org/0000-0002-8742-7730> ;
-    sdo:codeRepository "https://github.com/Kurrawong/exem-ont"^^xsd:anyURI ;
-    sdo:copyrightHolder <https://kurrawong.ai> ;
-    skos:definition "An ontology for the description of examples."@en ;
-    sdo:dateModified "2023-06-21"^^xsd:date ;
-    sdo:dateIssued "2023-06-21"^^xsd:date ;
-    sdo:license
-        # <https://rdflicense.linkeddata.es/rdflicense/cc-by4.0> ,
-        "https://creativecommons.org/licenses/by/4.0/"^^xsd:anyURI ;
-    sdo:publisher <https://kurrawong.ai> ;
-    skos:prefLabel "Exemplification Ontology"@en ;
     vann:preferredNamespacePrefix "exem" ;
     owl:versionIRI :0.3 ;
     owl:versionInfo "0.3"@en ;
+    skos:definition "An ontology for the description of examples."@en ;
     skos:historyNote "This ontology was initially created in 2021 and mostly implemented in 2023 for Australian government data modelling projects that wanted to include examples within the models (ontologies). An update to the model was made to use existing schema.org terminology plus some other bits from DCAT and SKOS." ;
+    skos:prefLabel "Exemplification Ontology"@en ;
+    sdo:codeRepository "https://github.com/Kurrawong/exem-ont"^^xsd:anyURI ;
+    sdo:copyrightHolder <https://kurrawong.ai> ;
+    sdo:dateCreated "2021-09-28"^^xsd:date ;
+    sdo:dateIssued "2023-06-21"^^xsd:date ;
+    sdo:dateModified "2023-06-21"^^xsd:date ;
+    sdo:license "https://creativecommons.org/licenses/by/4.0/"^^xsd:anyURI ;
+    sdo:publisher <https://kurrawong.ai> ;
+    sdo:workExample [
+            a sdo:ImageObject ;
+            sh:order 0 ;
+            sdo:caption "Model overview." ;
+            sdo:contentUrl "https://kurrawong.github.io/exem-ont/img/Overview.svg"^^xsd:anyURI ;
+            sdo:description "A diagrammatic overview of the model." ;
+            sdo:encodingFormat "image/svg+xml" ;
+            sdo:name "Model Overview"
+        ] ;
 .
 
-<https://kurrawong.ai>
-    a sdo:Organization ;
-    sdo:name "KurrawongAI" ;
-    sdo:url "https://kurrawong.ai"^^xsd:anyURI ;
+sdo:caption
+    a owl:AnnotationProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:definition "The caption for this object. For downloadable machine formats (closed caption, subtitles etc.) use MediaObject and indicate the encodingFormat."@en ;
+    skos:prefLabel "caption"@en ;
+    skos:scopeNote "Use this to indicate a short description of an ImageObject example."@en ;
+    sdo:domainIncludes sdo:ImageObject ;
+    sdo:rangeIncludes
+        rdf:langString ,
+        xsd:string ;
+.
+
+sdo:contentUrl
+    a owl:DatatypeProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:definition "Actual bytes of the media object, for example the image file or video file."@en ;
+    skos:prefLabel "content Url"@en ;
+    skos:scopeNote "Use this to indicate the location of an example such as an image or audio file."@en ;
+    sdo:domainIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
+    sdo:rangeIncludes xsd:anyURI ;
+.
+
+sdo:description
+    a owl:AnnotationProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:definition "A description of the item."@en ;
+    skos:prefLabel "description"@en ;
+    skos:scopeNote "Use this to indicate a description of the example."@en ;
+    sdo:domainIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
+    sdo:rangeIncludes
+        rdf:langString ,
+        xsd:string ;
+.
+
+sdo:encodingFormat
+    a owl:AnnotationProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:definition "Media type typically expressed using a MIME format (see IANA site and MDN reference), e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc."@en ;
+    skos:prefLabel "encoding format"@en ;
+    skos:scopeNote "Use this to indicate the media type format of the example."@en ;
+    sdo:domainIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
+    sdo:rangeIncludes xsd:string ;
+.
+
+sdo:name
+    a owl:AnnotationProperty ;
+    rdfs:isDefinedBy sdo: ;
+    rdfs:subPropertyOf rdfs:label ;
+    skos:definition "The name of the item."@en ;
+    skos:prefLabel "name"@en ;
+    skos:scopeNote "Use this to indicate the name, label or title of the example."@en ;
+    sdo:domainIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
+    sdo:rangeIncludes
+        rdf:langString ,
+        xsd:string ;
 .
 
 <http://orcid.org/0000-0002-8742-7730>
@@ -47,93 +152,42 @@ ont:
     sdo:name "Nicholas J. Car" ;
 .
 
-sdo:name
-    a owl:AnnotationProperty ;
-    rdfs:isDefinedBy sdo: ;
-    skos:prefLabel "name"@en ;
-    skos:definition "The name of the item."@en ;
-    skos:scopeNote "Use this to indicate the name, label or title of the example."@en ;
-.
-
-sdo:description
-    a owl:AnnotationProperty ;
-    rdfs:isDefinedBy sdo: ;
-    skos:prefLabel "description"@en ;
-    skos:definition "A description of the item."@en ;
-    skos:scopeNote "Use this to indicate a description of the example."@en ;
-.
-
-sdo:contentUrl
-    a owl:AnnotationProperty ;
-    rdfs:isDefinedBy sdo: ;
-    skos:prefLabel "content Url"@en ;
-    skos:definition "Actual bytes of the media object, for example the image file or video file."@en ;
-    skos:scopeNote "Use this to indicate the location of an example such as an image or audio file."@en ;
-.
-
-sdo:encodingFormat
-    a owl:AnnotationProperty ;
-    rdfs:isDefinedBy sdo: ;
-    skos:prefLabel "encoding format"@en ;
-    skos:definition "Media type typically expressed using a MIME format (see IANA site and MDN reference), e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc."@en ;
-    skos:scopeNote "Use this to indicate the media type format of the example."@en ;
-.
-
-dcterms:source
-    a owl:AnnotationProperty ;
-    rdfs:isDefinedBy dcterms: ;
-    skos:definition "A related resource from which the described resource is derived."@en ;
-    skos:example "See example for :example property"@en ;
-    skos:prefLabel "Source"@en ;
-    skos:historyNote "Included here as per general metadata use (DCAT, SDO etc.)"@en ;
-    skos:scopeNote """Use this property to indicate a non-RDF resource, such as a web page, from which this example was derived. Use prov:wasDerivedFrom to indicate an RDF resource. Use skos:historyNote to describe a non-linkable source or to contain a general description of how this example was created.
-
-Use a datatype of xsd:anyURI for web pages"""@en ;
-.
-
-sdo:workExample
-    a owl:ObjectProperty ;
-    rdfs:isDefinedBy sdo: ;
-    sdo:rangeIncludes sdo:MediaObject, sdo:ImageObject ;
-    skos:definition "Example/instance/realization/derivation of the concept of this creative work. E.g. the paperback edition, first edition, or e-book."@en ;
-    skos:prefLabel "work example"@en ;
-    skos:scopeNote "Use this property to link from a resource to an example described using a MediaObject."@en ;
-    sdo:inverseOf sdo:exampleOfWork ;
-    # TODO: provide example usage
-.
-
 sdo:exampleOfWork
     a owl:ObjectProperty ;
     rdfs:isDefinedBy sdo: ;
     skos:definition "A creative work that this work is an example/instance/realization/derivation of."@en ;
     skos:prefLabel "example of work"@en ;
+    sdo:domainIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
     sdo:inverseOf sdo:workExample ;
 .
 
-sdo:caption
-    a owl:AnnotationProperty ;
-    rdfs:isDefinedBy sdo: ;
-    skos:prefLabel "caption"@en ;
-    skos:definition "The caption for this object. For downloadable machine formats (closed caption, subtitles etc.) use MediaObject and indicate the encodingFormat."@en ;
-    skos:scopeNote "Use this to indicate a short description of an ImageObject example."@en ;
-.
-
-
-dcat:hadRole
+sdo:workExample
     a owl:ObjectProperty ;
-    rdfs:isDefinedBy dcat: ;
-    sdo:rangeIncludes skos:Concept ;
-    skos:definition "The function of an entity or agent with respect to another entity or resource."@en ;
-    skos:prefLabel "had role"@en ;
-    skos:scopeNote "Use this property to indicate the role of the example (canonical, implementation, informative, etc.) with respect to the thing being exemplified. Values are expected to be from a SKOS controlled vocabulary."@en ;
+    rdfs:isDefinedBy sdo: ;
+    skos:definition "Example/instance/realization/derivation of the concept of this creative work. E.g. the paperback edition, first edition, or e-book."@en ;
+    skos:prefLabel "work example"@en ;
+    skos:scopeNote "Use this property to link from a resource to an example described using a MediaObject."@en ;
+    sdo:inverseOf sdo:exampleOfWork ;
+    sdo:rangeIncludes
+        sdo:ImageObject ,
+        sdo:TextObject ;
 .
 
 sdo:MediaObject
     a owl:Class ;
     rdfs:isDefinedBy sdo: ;
+    rdfs:subClassOf sdo:CreativeWork ;
     skos:definition "A media object, such as an image, video, audio, or text object embedded in a web page or a downloadable dataset i.e. DataDownload."@en ;
     skos:prefLabel "MediaObject"@en ;
-    skos:scopeNote "Use this class to represent examples of resources."@en ;
+    skos:scopeNote "Not to be used directly. Use one of its subclasses such as TextObject or ImageObject."@en ;
+.
+
+<https://kurrawong.ai>
+    a sdo:Organization ;
+    sdo:name "KurrawongAI" ;
+    sdo:url "https://kurrawong.ai"^^xsd:anyURI ;
 .
 
 sdo:ImageObject
@@ -143,4 +197,67 @@ sdo:ImageObject
     skos:definition "An image file."@en ;
     skos:prefLabel "ImageObject"@en ;
     skos:scopeNote "Use this class to represent examples that are in the form of an image."@en ;
+    sdo:workExample [
+            a sdo:TextObject ;
+            sdo:description "An ImageObject usage example. The example here is exactly how this document's Figure 1 is described." ;
+            sdo:encodingFormat "text/turtle" ;
+            sdo:name "Usage Example" ;
+            sdo:text """
+            ont:
+                a owl:Ontology ;
+                sdo:workExample [
+                        a sdo:ImageObject ;
+                        sdo:name "Model Overview" ;
+                        sdo:description "A diagrammatic overview of the model." ;
+                        sh:order 0 ;
+                        sdo:caption "Model overview." ;
+                        sdo:encodingFormat "image/svg+xml" ;
+                        sdo:contentUrl "https://kurrawong.github.io/exem-ont/img/Overview.svg"^^xsd:anyURI
+                    ] ;
+            .
+        """
+        ] ;
 .
+
+sdo:TextObject
+    a owl:Class ;
+    rdfs:isDefinedBy sdo: ;
+    rdfs:subClassOf sdo:MediaObject ;
+    skos:definition "A text file. The text can be unformatted or contain markup, html, etc.."@en ;
+    skos:prefLabel "TextObject"@en ;
+    skos:scopeNote "Use this class to represent examples that are in text form."@en ;
+    sdo:workExample [
+            a sdo:TextObject ;
+            sdo:description "The definition of sdo:TextObject encoded as an example." ;
+            sdo:encodingFormat "text/turtle" ;
+            sdo:name "Text Example in RDF Turtle" ;
+            sdo:text """
+            sdo:TextObject
+            a owl:Class ;
+            rdfs:isDefinedBy sdo: ;
+            rdfs:subClassOf sdo:MediaObject ;
+            skos:definition "A text file. The text can be unformatted or contain markup, html, etc.."@en ;
+            skos:prefLabel "TextObject"@en ;
+            skos:scopeNote "Use this class to represent examples that are in text form."@en ;
+            sdo:workExample [
+                a sdo:TextObject ;
+                sdo:name "Text Example in RDF Turtle" ;
+                sdo:description "The definition of sdo:TextObject encoded as an example." ;
+                sdo:encodingFormat "text/turtle" ;
+                sdo:text \"\"\"
+                    PREFIX sdo: <https://schema.org/>
+
+                    <https://example.com/text>
+                        a sdo:Thing ;
+                        sdo:workExample [
+                            sdo:encodingFormat "text/turtle" ;
+                            sdo:text "<https://example.com/text> a sdo:Thing ." ;
+                        ] ;
+                    .
+                \"\"\" ;
+            ] ;
+        .
+        """
+        ] ;
+.
+
