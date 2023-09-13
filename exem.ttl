@@ -149,6 +149,7 @@ sdo:text
     skos:definition "The textual content of this CreativeWork."@en ;
     skos:prefLabel "text"@en ;
     sdo:domainIncludes sdo:TextObject ;
+    skos:scopeNote "Use this to indicate the value of the TextObject."@en ;
     sdo:rangeIncludes
         rdf:langString ,
         xsd:string ;
