@@ -98,9 +98,7 @@ sdo:contentUrl
     skos:definition "Actual bytes of the media object, for example the image file or video file."@en ;
     skos:prefLabel "content Url"@en ;
     skos:scopeNote "Use this to indicate the location of an example such as an image or audio file."@en ;
-    sdo:domainIncludes
-        sdo:ImageObject ,
-        sdo:TextObject ;
+    sdo:domainIncludes sdo:ImageObject ;
     sdo:rangeIncludes xsd:anyURI ;
 .
 
@@ -140,6 +138,18 @@ sdo:name
     sdo:domainIncludes
         sdo:ImageObject ,
         sdo:TextObject ;
+    sdo:rangeIncludes
+        rdf:langString ,
+        xsd:string ;
+.
+
+sdo:text
+    a owl:DatatypeProperty ;
+    rdfs:isDefinedBy sdo: ;
+    skos:definition "The textual content of this CreativeWork."@en ;
+    skos:prefLabel "text"@en ;
+    sdo:domainIncludes sdo:TextObject ;
+    skos:scopeNote "Use this to indicate the value of the TextObject."@en ;
     sdo:rangeIncludes
         rdf:langString ,
         xsd:string ;
